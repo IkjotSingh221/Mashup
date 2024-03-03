@@ -1,5 +1,6 @@
 import streamlit as st
 from mashup import *
+import re
 
 def send_mail(to, filename):
     from dotenv import load_dotenv
@@ -26,6 +27,9 @@ def main():
     num_videos = st.number_input("Number of Videos", min_value=0, step=1)
     video_duration = st.number_input("Duration of Videos (in seconds)", min_value=0, step=1)
     email_id = st.text_input("Email ID")
+    # check if email id is in correct format
+    if not re.match(r'[^@]+@[^@]+\.[^@]+', email_id):
+        st.write("Please enter a valid email id")
     if st.button("Submit"):
         process_form_data(singer_name, num_videos, video_duration, email_id)
 
